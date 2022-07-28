@@ -1,13 +1,24 @@
-import { FC, memo } from "react";
+import { FC, memo, ReactNode } from "react";
+import styled from "styled-components";
 
-export const Banner: FC = memo(() => {
+type Props = {
+  link: string;
+  imageSrc: string;
+  imageAlt: string;
+};
+
+export const Banner: FC<Props> = memo(({ link, imageSrc, imageAlt }) => {
   return (
     <>
-      <div className="banner">
-        <a href="https://note.stopcovid19.jp/n/n0b078f2b3dce">
-          <img alt="コロナの専門家" src="/img/notestopcovid19-banner.png" />
+      <Main>
+        <a href={link}>
+          <img src={imageSrc} alt={imageAlt} />
         </a>
-      </div>
+      </Main>
     </>
   );
 });
+
+const Main = styled.div`
+  margin: 1vw;
+`;

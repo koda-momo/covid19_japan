@@ -16,8 +16,9 @@ export const Header: FC = memo(() => {
 const Title = styled.h1`
   text-align: center;
   margin: 0;
-  padding: 0.3em;
-  font-size: 8vmin;
+  padding-top: 5px;
+  padding-bottom: 13px;
+  font-size: 45px;
 `;
 
 const Subtitle = styled.div`

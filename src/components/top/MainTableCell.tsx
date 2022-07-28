@@ -2,13 +2,13 @@ import { FC, memo } from "react";
 import styled from "styled-components";
 
 type Props = {
-  title: string;
-  summary?: string;
+  title: string; //項目名
+  summary?: string; //結果
   unit?: string; //単位
 };
 
 /**
- *
+ * メインテーブルの1マスずつ.
  */
 export const MainTableCell: FC<Props> = memo(({ title, summary, unit }) => {
   return (
@@ -25,13 +25,13 @@ export const MainTableCell: FC<Props> = memo(({ title, summary, unit }) => {
 });
 
 const Main = styled.div`
-  width: 50%;
+  width: 100%;
+  min-width: 200px; //表全体の横幅が300px + 線が被るので3.5/2
 `;
 
 const Title = styled.div`
-  border: 0.3vw solid #ad232f;
-  margin: 0 -0.3vw -0.3vw 0;
-  padding: 0.1vh 0.5vw;
+  border: 3.5px solid #ad232f;
+  padding: 1px;
   text-align: center;
 `;
 
@@ -49,6 +49,4 @@ const Flex = styled.div`
   color: white;
   justify-content: center;
   align-items: flex-end;
-  margin: 0 -0.3vw -0.3vw 0;
-  padding: 0.1vh 0.5vw;
 `;

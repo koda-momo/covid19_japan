@@ -6,7 +6,7 @@ import { PageButton } from "./components/layout/PageButton";
 
 function App() {
   return (
-    <>
+    <All>
       <HeaderCss>
         <Header />
       </HeaderCss>
@@ -18,11 +18,19 @@ function App() {
       <FooterCss>
         <Footer />
       </FooterCss>
-    </>
+    </All>
   );
 }
 
 export default App;
+
+const All = styled.div`
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 120px; //Footerの高さ
+  box-sizing: border-box;
+`;
 
 const HeaderCss = styled.div`
   background-color: #ad232f;
@@ -32,4 +40,7 @@ const HeaderCss = styled.div`
 const FooterCss = styled.div`
   width: 100%;
   margin-top: 10px;
+  height: 120px;
+  position: absolute; /*←絶対位置*/
+  bottom: 0; /*下に固定*/
 `;

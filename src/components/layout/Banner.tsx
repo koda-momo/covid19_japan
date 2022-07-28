@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from "react";
+import { FC, memo } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -10,15 +10,14 @@ type Props = {
 export const Banner: FC<Props> = memo(({ link, imageSrc, imageAlt }) => {
   return (
     <>
-      <Main>
-        <a href={link}>
-          <img src={imageSrc} alt={imageAlt} />
-        </a>
-      </Main>
+      <a href={link}>
+        <Image src={imageSrc} alt={imageAlt} />
+      </a>
     </>
   );
 });
 
-const Main = styled.div`
-  margin: 1vw;
+const Image = styled.img`
+  width: 300px;
+  height: 70px;
 `;

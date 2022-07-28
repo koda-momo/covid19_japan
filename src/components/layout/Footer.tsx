@@ -15,15 +15,14 @@ export const Footer: FC = memo(() => {
           imageAlt="コロナの専門家"
         />
 
-        {/* 
-        <Banner>
-          <iframe
+        <HowAreYou>
+          <Iframe
             title="How are you? / げんきですか？"
             data-src="https://tk3-805-12365.vw.sakura.ne.jp:3443/mini"
             scrolling="no"
             src="https://tk3-805-12365.vw.sakura.ne.jp:3443/mini"
-          ></iframe>
-        </Banner> */}
+          ></Iframe>
+        </HowAreYou>
 
         <Banner
           link="https://whowatch.tv/"
@@ -37,5 +36,21 @@ export const Footer: FC = memo(() => {
 
 const Banners = styled.div`
   display: flex;
-  gap: 3;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HowAreYou = styled.div`
+  display: inline-block;
+  margin: 1vw;
+`;
+
+const Iframe = styled.iframe`
+  display: inline-block;
+  width: 300px;
+  height: 70px;
+  border: #ddd solid 1px;
+  box-sizing: border-box;
+  padding: 5px 0 0 0;
 `;

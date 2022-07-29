@@ -1,5 +1,5 @@
 import { FC, memo, useCallback, useEffect, useState } from "react";
-import { Scatter, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { Chart, registerables, ChartOptions, ChartData } from "chart.js";
 import axios from "axios";
 import styled from "styled-components";

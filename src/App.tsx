@@ -36,7 +36,6 @@ const HeaderCss = styled.div`
 
 const FooterCss = styled.div`
   width: 100%;
-  margin-top: 10px;
   height: 120px;
   position: absolute; /*←絶対位置*/
   bottom: 0; /*下に固定*/

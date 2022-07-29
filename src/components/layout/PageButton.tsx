@@ -99,5 +99,5 @@ const Flex = styled.div`
   gap: 10px;
   justify-content: center;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `;

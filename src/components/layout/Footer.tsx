@@ -39,6 +39,7 @@ const Banners = styled.div`
   gap: 10px;
   justify-content: center;
   align-items: center;
+  margin-top: 40px;
 `;
 
 const HowAreYou = styled.div`

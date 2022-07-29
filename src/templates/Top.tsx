@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { PageButton } from "../components/layout/PageButton";
 import { MainTable } from "../components/top/MainTable";
 import { PrefecturesTable } from "../components/top/PrefecturesTable";
 
@@ -9,6 +10,7 @@ import { PrefecturesTable } from "../components/top/PrefecturesTable";
 export const Top: FC = () => {
   return (
     <Main>
+      <PageButton />
       <Flex>
         <MainTableSize>
           <MainTable />

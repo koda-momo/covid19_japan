@@ -1,56 +1,79 @@
-import { FC, memo, useCallback, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { FC, memo, useCallback, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 /**
  * ページを切り替えるボタンコンポーネント.
  */
 export const PageButton: FC = memo(() => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  //今そのページにいるか否か
   const [isTop, setIsTop] = useState(false);
   const [isLine, setIsLine] = useState(false);
+
+  /**
+   * パス変更でボタンの色を変える.
+   */
+  useEffect(() => {
+    //Topページ
+    if (location.pathname === "/") {
+      setIsTop(true);
+      setIsLine(false);
+      return;
+    }
+
+    //グラフページ
+    if (location.pathname === "/linegraph") {
+      setIsTop(false);
+      setIsLine(true);
+      return;
+    }
+
+    //その他のページ
+    setIsTop(false);
+    setIsLine(false);
+  }, [location.pathname]);
+
   /**
    * Topページに遷移.
    */
   const gotoTop = useCallback(() => {
-    // console.log(location.pathname);
-    setIsTop(true);
-    setIsLine(false);
-  }, []);
+    navigate("/");
+  }, [navigate]);
 
   /**
    * 折れ線グラフページに遷移.
    */
   const gotoLine = useCallback(() => {
-    // console.log(location.pathname);
-    // navigate("/lineGraph");
-    setIsTop(false);
-    setIsLine(true);
-  }, []);
+    navigate("/linegraph");
+  }, [navigate]);
 
   return (
-    <Flex>
-      {isTop ? (
-        <OnButton type="button" onClick={gotoTop}>
-          Top
-        </OnButton>
-      ) : (
-        <OffButton type="button" onClick={gotoTop}>
-          Top
-        </OffButton>
-      )}
+    <>
+      <Flex>
+        {isTop ? (
+          <OnButton type="button" onClick={gotoTop}>
+            Top
+          </OnButton>
+        ) : (
+          <OffButton type="button" onClick={gotoTop}>
+            Top
+          </OffButton>
+        )}
 
-      {isLine ? (
-        <OnButton type="button" onClick={gotoLine}>
-          概況
-        </OnButton>
-      ) : (
-        <OffButton type="button" onClick={gotoLine}>
-          概況
-        </OffButton>
-      )}
-    </Flex>
+        {isLine ? (
+          <OnButton type="button" onClick={gotoLine}>
+            概況
+          </OnButton>
+        ) : (
+          <OffButton type="button" onClick={gotoLine}>
+            概況
+          </OffButton>
+        )}
+      </Flex>
+    </>
   );
 });
 

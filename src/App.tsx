@@ -2,7 +2,6 @@ import { Router } from "./Router";
 import { Header } from "./components/layout/Header";
 import { Footer } from "./components/layout/Footer";
 import styled from "styled-components";
-import { PageButton } from "./components/layout/PageButton";
 
 function App() {
   return (
@@ -10,8 +9,6 @@ function App() {
       <HeaderCss>
         <Header />
       </HeaderCss>
-
-      <PageButton />
 
       <Router />
 

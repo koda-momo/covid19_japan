@@ -5,32 +5,40 @@ type Props = {
   name: string;
   bed: number; //病床数
   patients: number; //現在患者数
+  upDown: "up" | "down";
 };
 
 /**
  * 都道府県別テーブルのセル1つずつ.
  */
-export const PrefecturesCell: FC<Props> = memo(({ name, bed, patients }) => {
-  return (
-    <>
-      <Cell>
-        <Flex>
-          <PrefectureName>{name}</PrefectureName>
-          <Icon>
-            <img src="/img/trendarrow01.svg" alt="up" />
-          </Icon>
+export const PrefecturesCell: FC<Props> = memo(
+  ({ name, bed, patients, upDown }) => {
+    return (
+      <>
+        <Cell>
+          <Flex>
+            <PrefectureName>{name}</PrefectureName>
 
-          {/* <img src="/img/trendarrow03.svg" alt="down" /> */}
-        </Flex>
-        <div>{Math.round((patients / bed) * 100)}%</div>
-        <div>
-          <BoldFont>{patients}</BoldFont>
-          <SmallFont>/{bed}</SmallFont>
-        </div>
-      </Cell>
-    </>
-  );
-});
+            {upDown === "up" ? (
+              <UpIcon>
+                <img src="/img/trendarrow01.svg" alt="up" />
+              </UpIcon>
+            ) : (
+              <DownIcon>
+                <img src="/img/trendarrow03.svg" alt="down" />{" "}
+              </DownIcon>
+            )}
+          </Flex>
+          <div>{Math.round((patients / bed) * 100)}%</div>
+          <div>
+            <BoldFont>{patients.toLocaleString()}</BoldFont>
+            <SmallFont>/{bed}</SmallFont>
+          </div>
+        </Cell>
+      </>
+    );
+  }
+);
 
 const Cell = styled.div`
   background-color: black;
@@ -44,6 +52,7 @@ const Cell = styled.div`
 const Flex = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const SmallFont = styled.span`
@@ -58,6 +67,11 @@ const PrefectureName = styled.span`
   font-size: 15px;
 `;
 
-const Icon = styled.div`
+const UpIcon = styled.div`
   width: 15px;
+`;
+
+const DownIcon = styled.div`
+  width: 15px;
+  transform: scale(1, -1);
 `;

@@ -37,6 +37,7 @@ export const PrefecturesTable: FC = memo(() => {
             {prefecturesName.slice(0, 5).map((item) => (
               <Td key={item.prefectureNumber}>
                 <PrefecturesCell
+                  upDown={item.upDown}
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
@@ -48,6 +49,7 @@ export const PrefecturesTable: FC = memo(() => {
             {prefecturesName.slice(5, 12).map((item) => (
               <Td key={item.prefectureNumber}>
                 <PrefecturesCell
+                  upDown={item.upDown}
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
@@ -59,6 +61,7 @@ export const PrefecturesTable: FC = memo(() => {
             {prefecturesName.slice(12, 19).map((item) => (
               <Td key={item.prefectureNumber}>
                 <PrefecturesCell
+                  upDown={item.upDown}
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
@@ -70,6 +73,7 @@ export const PrefecturesTable: FC = memo(() => {
             {prefecturesName.slice(19, 26).map((item) => (
               <Td key={item.prefectureNumber}>
                 <PrefecturesCell
+                  upDown={item.upDown}
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
@@ -81,6 +85,7 @@ export const PrefecturesTable: FC = memo(() => {
             {prefecturesName.slice(26, 33).map((item) => (
               <Td key={item.prefectureNumber}>
                 <PrefecturesCell
+                  upDown={item.upDown}
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
@@ -92,6 +97,7 @@ export const PrefecturesTable: FC = memo(() => {
             {prefecturesName.slice(33, 40).map((item) => (
               <Td key={item.prefectureNumber}>
                 <PrefecturesCell
+                  upDown={item.upDown}
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
@@ -103,6 +109,7 @@ export const PrefecturesTable: FC = memo(() => {
             {prefecturesName.slice(40, 47).map((item) => (
               <Td key={item.prefectureNumber}>
                 <PrefecturesCell
+                  upDown={item.upDown}
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}

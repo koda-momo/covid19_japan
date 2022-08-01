@@ -1,41 +1,84 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
+import { useGetTodaysData } from "../../hooks/useGetTodaysData";
+import { todaysDataType } from "../../types/TodaysDataType";
 import { MainTableCell } from "./MainTableCell";
 
 /**
  * メインテーブル.
  */
 export const MainTable: FC = memo(() => {
+  //最新データ
+  const [todaysData, setTodaysData] = useState<todaysDataType>({
+    ncurrentpatients: 0,
+    nexits: 0,
+    ndeaths: 0,
+    npatients: 0,
+  });
+
+  //初期データの取得
+  const { getTodaysData } = useGetTodaysData();
+
+  useEffect(() => {
+    getTodaysData(setTodaysData);
+    console.dir(JSON.stringify(todaysData));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /**
+   * 現在患者数/対策病床数を返すメソッド.
+   */
+
+  const calcPercent = useCallback((ncurrentpatients: number, bed: number) => {
+    const calcAnswer = Math.round((ncurrentpatients / bed) * 100);
+
+    return calcAnswer;
+  }, []);
+
   return (
     <Summary>
       <Flex>
         <RightCell>
           <MainTableCell
             title="現在患者数/対策病床数"
-            summary="1,106"
+            summary={calcPercent(todaysData.ncurrentpatients, 112445)}
             unit="%"
           />
         </RightCell>
         <LeftCell>
-          <MainTableCell title="現在患者数" summary="1,244,444" unit="人" />
+          <MainTableCell
+            title="現在患者数"
+            summary={todaysData.ncurrentpatients}
+            unit="人"
+          />
         </LeftCell>
       </Flex>
 
       <Flex>
         <RightCell>
-          <MainTableCell title="累積退院者" summary="10,148,125" unit="人" />
+          <MainTableCell
+            title="累積退院者"
+            summary={todaysData.nexits}
+            unit="人"
+          />
         </RightCell>
         <LeftCell>
-          <MainTableCell title="死亡者数" summary="31,937" unit="人" />
+          <MainTableCell
+            title="死亡者数"
+            summary={todaysData.ndeaths}
+            unit="人"
+          />
         </LeftCell>
       </Flex>
 
       <Flex>
         <RightCell>
-          <MainTableCell title="対策病床数 112,445床" />
+          <MainTableCell title="対策病床数112,445床" />
         </RightCell>
         <LeftCell>
-          <MainTableCell title="PCR検査陽性者数 11,511,562人" />
+          <MainTableCell
+            title={`PCR検査陽性者数 ${todaysData.npatients.toLocaleString()}人`}
+          />
         </LeftCell>
       </Flex>
       <Postscript>

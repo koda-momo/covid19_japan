@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 type Props = {
   title: string; //項目名
-  summary?: string; //結果
+  summary?: number; //結果
   unit?: string; //単位
 };
 
@@ -16,7 +16,7 @@ export const MainTableCell: FC<Props> = memo(({ title, summary, unit }) => {
       <Title>{title}</Title>
       {summary && unit && (
         <Flex>
-          <Useratio>{summary}</Useratio>
+          <Useratio>{summary.toLocaleString()}</Useratio>
           <Fontsmaller>{unit}</Fontsmaller>
         </Flex>
       )}

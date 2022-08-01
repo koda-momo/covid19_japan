@@ -4,23 +4,29 @@ import { PrefecturesCell } from "./PrefecturesCell";
 import styled from "styled-components";
 import { PrefecturesType } from "../../types/PrefectureType";
 import { useGetAllPrefectureData } from "../../hooks/useGetAllPrefectureData";
+import { useGetTodaysData } from "../../hooks/useGetTodaysData";
 
 /**
  * 都道府県別テーブル.
  */
 export const PrefecturesTable: FC = memo(() => {
   const { getAllPrefectureData } = useGetAllPrefectureData();
+  const { getNcurrentpatients } = useGetTodaysData();
 
   //都道府県データ配列
   const [prefecturesName, setPrefecturesName] = useState<
     Array<PrefecturesType>
   >([]);
 
+  //全国現在の患者数
+  const [ncurrentpatients, setNcurrentpatients] = useState<number>(0);
+
   /**
    * 初期データの取得.
    */
   useEffect(() => {
     getAllPrefectureData(setPrefecturesName);
+    getNcurrentpatients(setNcurrentpatients);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -31,7 +37,7 @@ export const PrefecturesTable: FC = memo(() => {
         <tbody>
           <tr>
             <All colSpan={2}>
-              <div>1,246,299 / 112,445</div>
+              <div>{ncurrentpatients.toLocaleString()} / 112,445</div>
               <SmallFont>(全国) 現在患者数 / 対策病床数</SmallFont>
             </All>
             {prefecturesName.slice(0, 5).map((item) => (

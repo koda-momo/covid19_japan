@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
 import axios from "axios";
 import { PrefecturesType } from "../types/PrefectureType";
-import { format } from "date-fns";
 
 export const useGetAllPrefectureData = () => {
   /**

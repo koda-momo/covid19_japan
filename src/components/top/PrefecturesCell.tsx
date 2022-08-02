@@ -1,40 +1,44 @@
 import { FC, memo } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 type Props = {
   name: string;
   bed: number; //病床数
   patients: number; //現在患者数
   upDown: "up" | "down";
+  fullName: string; //都道府県削っていない名前
 };
 
 /**
  * 都道府県別テーブルのセル1つずつ.
  */
 export const PrefecturesCell: FC<Props> = memo(
-  ({ name, bed, patients, upDown }) => {
+  ({ name, bed, patients, upDown, fullName }) => {
     return (
       <>
-        <Cell>
-          <Flex>
-            <PrefectureName>{name}</PrefectureName>
+        <Link to="/prefectures" state={{ fullName: fullName }}>
+          <Cell>
+            <Flex>
+              <PrefectureName>{name}</PrefectureName>
 
-            {upDown === "up" ? (
-              <UpIcon>
-                <img src="/img/trendarrow01.svg" alt="up" />
-              </UpIcon>
-            ) : (
-              <DownIcon>
-                <img src="/img/trendarrow03.svg" alt="down" />{" "}
-              </DownIcon>
-            )}
-          </Flex>
-          <div>{Math.round((patients / bed) * 100)}%</div>
-          <div>
-            <BoldFont>{patients.toLocaleString()}</BoldFont>
-            <SmallFont>/{bed}</SmallFont>
-          </div>
-        </Cell>
+              {upDown === "up" ? (
+                <UpIcon>
+                  <img src="/img/trendarrow01.svg" alt="up" />
+                </UpIcon>
+              ) : (
+                <DownIcon>
+                  <img src="/img/trendarrow03.svg" alt="down" />{" "}
+                </DownIcon>
+              )}
+            </Flex>
+            <div>{Math.round((patients / bed) * 100)}%</div>
+            <div>
+              <BoldFont>{patients.toLocaleString()}</BoldFont>
+              <SmallFont>/{bed}</SmallFont>
+            </div>
+          </Cell>
+        </Link>
       </>
     );
   }

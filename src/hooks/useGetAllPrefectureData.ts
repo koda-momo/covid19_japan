@@ -62,6 +62,7 @@ export const useGetAllPrefectureData = () => {
           bed: bedCalc,
           patients: todayData[i].ncurrentpatients,
           upDown: upDown,
+          fullName: todayData[i].name, //フルネーム(ローマ字)
         });
       }
 

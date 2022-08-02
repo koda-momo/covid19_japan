@@ -47,6 +47,7 @@ export const PrefecturesTable: FC = memo(() => {
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
+                  fullName={item.fullName}
                 />
               </Td>
             ))}
@@ -59,6 +60,7 @@ export const PrefecturesTable: FC = memo(() => {
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
+                  fullName={item.fullName}
                 />
               </Td>
             ))}
@@ -71,6 +73,7 @@ export const PrefecturesTable: FC = memo(() => {
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
+                  fullName={item.fullName}
                 />
               </Td>
             ))}
@@ -83,6 +86,7 @@ export const PrefecturesTable: FC = memo(() => {
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
+                  fullName={item.fullName}
                 />
               </Td>
             ))}
@@ -95,6 +99,7 @@ export const PrefecturesTable: FC = memo(() => {
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
+                  fullName={item.fullName}
                 />
               </Td>
             ))}
@@ -107,6 +112,7 @@ export const PrefecturesTable: FC = memo(() => {
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
+                  fullName={item.fullName}
                 />
               </Td>
             ))}
@@ -119,6 +125,7 @@ export const PrefecturesTable: FC = memo(() => {
                   name={item.prefectureName}
                   bed={item.bed}
                   patients={item.patients}
+                  fullName={item.fullName}
                 />
               </Td>
             ))}

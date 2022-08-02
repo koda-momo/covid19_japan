@@ -10,7 +10,7 @@ type Props = {
 };
 
 /**
- *
+ *　折れ線グラフコンポーネント.
  */
 export const LineGraphItem: FC<Props> = memo(({ data, options, title }) => {
   Chart.register(...registerables);

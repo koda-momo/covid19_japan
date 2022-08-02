@@ -21,7 +21,6 @@ export const MainTable: FC = memo(() => {
 
   useEffect(() => {
     getTodaysData(setTodaysData);
-    console.dir(JSON.stringify(todaysData));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

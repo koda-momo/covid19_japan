@@ -15,16 +15,19 @@ export const useGetPrefectureData = () => {
   //折れ線グラフ日付ラベル(x軸)
   const [dateData, setDateData] = useState<Array<string>>([]);
 
+  //円グラフ床データ
+  const [pieBedData, setPieBedData] = useState(0);
+
   /**
-   * 都道府県データの取得.
+   * 都道府県折れ線グラフデータの取得.
    */
   const getPrefectureData = useCallback(
     async (
-      fullName: string,
-      setPrefectureData: Dispatch<SetStateAction<PrefectureType[]>> //都道府県データ配列
+      romaji: string,
+      setPrefectureData: Dispatch<SetStateAction<PrefectureType>> //都道府県データ配列
     ) => {
       const response = await axios.get(
-        `https://www.stopcovid19.jp/data/covid19japan/pref/${fullName}.csv`
+        `https://www.stopcovid19.jp/data/covid19japan/pref/${romaji}.csv`
       );
       const csv = response.data;
 
@@ -66,7 +69,7 @@ export const useGetPrefectureData = () => {
       setDateData(dateArray);
       setNcurrentpatientsData(ncurrentpatientsArray);
       setNdeathsArray(ndeathsArray);
-      setPrefectureData(obj);
+      setPrefectureData(obj[obj.length - 2]);
     },
     []
   );
@@ -90,5 +93,23 @@ export const useGetPrefectureData = () => {
     ],
   };
 
-  return { getPrefectureData, lineData };
+  /**
+   * 都道府県円グラフデータの取得.
+   */
+  const getPieData = useCallback(async (fullName: string) => {
+    const reponse = await axios.get(
+      "https://www.stopcovid19.jp/data/covid19japan_beds/latest.json"
+    );
+
+    const data = reponse.data.find((item: any) => {
+      return item.都道府県名 === fullName;
+    });
+
+    const hospitalBeds = Number(data.入院患者受入確保病床);
+    const hotelsBeds = Number(data.宿泊施設受入可能室数);
+
+    setPieBedData(hospitalBeds + hotelsBeds);
+  }, []);
+
+  return { getPrefectureData, lineData, getPieData, pieBedData };
 };

@@ -15,6 +15,7 @@ import styled from "styled-components";
 // import ChartDataLabels from "chartjs-plugin-datalabels";
 
 interface State {
+  romaji: string;
   fullName: string;
 }
 
@@ -27,13 +28,19 @@ export const Prefectures: FC = () => {
 
   // トップページから対象都道府県名を受け取るためのlocation
   const location = useLocation();
-  const { fullName } = location.state as State;
-  console.log(fullName);
+  const { romaji, fullName } = location.state as State;
 
   //都道府県データ
-  const [prefectureData, setPrefectureData] = useState<Array<PrefectureType>>(
-    []
-  );
+  const [prefectureData, setPrefectureData] = useState<PrefectureType>({
+    date: "",
+    npatients: 0,
+    ncurrentpatients: 0,
+    nexits: 0,
+    ndeaths: 0,
+    nheavycurrentpatients: 0,
+    nunknowns: 0,
+    ninspections: 0,
+  });
 
   //都道府県データの取得
   const { getPrefectureData, lineData } = useGetPrefectureData();
@@ -61,7 +68,7 @@ export const Prefectures: FC = () => {
   });
 
   useEffect(() => {
-    getPrefectureData(fullName, setPrefectureData);
+    getPrefectureData(romaji, setPrefectureData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,8 +76,15 @@ export const Prefectures: FC = () => {
     <>
       <Main>
         <PageButton />
-        {/* <PieChart /> */}
+        <PieGraph>
+          <PieChart
+            ncurrentpatients={prefectureData.ncurrentpatients}
+            fullName={fullName}
+          />
+        </PieGraph>
+
         <PrefecturesReferenceMaterial />
+
         <LineGraph>
           <LineGraphItem data={lineData} options={lineOptions} title="" />
         </LineGraph>
@@ -83,7 +97,16 @@ const Main = styled.div`
   width: 100%;
 `;
 
+const PieGraph = styled.div`
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 50px;
+`;
+
 const LineGraph = styled.div`
   width: 70%;
   margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 50px;
 `;

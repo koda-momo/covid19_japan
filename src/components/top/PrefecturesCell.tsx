@@ -7,6 +7,7 @@ type Props = {
   bed: number; //病床数
   patients: number; //現在患者数
   upDown: "up" | "down";
+  romaji: string; //ローマ字都道府県名
   fullName: string; //都道府県削っていない名前
 };
 
@@ -14,10 +15,10 @@ type Props = {
  * 都道府県別テーブルのセル1つずつ.
  */
 export const PrefecturesCell: FC<Props> = memo(
-  ({ name, bed, patients, upDown, fullName }) => {
+  ({ name, bed, patients, upDown, romaji, fullName }) => {
     return (
       <>
-        <Link to="/prefectures" state={{ fullName: fullName }}>
+        <Link to="/prefectures" state={{ romaji: romaji, fullName: fullName }}>
           <Cell>
             <Flex>
               <PrefectureName>{name}</PrefectureName>

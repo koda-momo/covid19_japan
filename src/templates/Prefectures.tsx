@@ -11,6 +11,7 @@ import { PrefecturesReferenceMaterial } from "../components/prefectures/Prefectu
 import { PieChart } from "../components/prefectures/PieChart";
 import { PrefectureType } from "../types/PrefectureType";
 import { useGetPrefectureData } from "../hooks/useGetPrefectureData";
+import styled from "styled-components";
 // import ChartDataLabels from "chartjs-plugin-datalabels";
 
 interface State {
@@ -29,39 +30,18 @@ export const Prefectures: FC = () => {
   const { fullName } = location.state as State;
   console.log(fullName);
 
-  //折れ線グラフ人数ラベル(y軸)
-  const [ncurrentpatientsData, setNcurrentpatientsData] = useState<
-    Array<number>
-  >([]);
-
-  //折れ線グラフ日付ラベル(x軸)
-  const [dateData, setDateData] = useState<Array<string>>([]);
-
   //都道府県データ
   const [prefectureData, setPrefectureData] = useState<Array<PrefectureType>>(
     []
   );
 
   //都道府県データの取得
-  const { getPrefectureData } = useGetPrefectureData();
-
-  //折れ線グラフデータ
-  const lineData: ChartData<"line"> = {
-    labels: dateData, //日付(x軸)
-    datasets: [
-      {
-        label: "現在入院治療を要する者",
-        data: ncurrentpatientsData, //人数(y軸)
-        backgroundColor: "#5050CD",
-        yAxisID: "ncurrentpatients", //複数データを使用する際はIDを付与
-      },
-    ],
-  };
+  const { getPrefectureData, lineData } = useGetPrefectureData();
 
   //折れ線グラフoptions
   const [lineOptions] = useState<ChartOptions<"line">>({
     scales: {
-      y: {
+      ndeaths: {
         display: true,
         position: "right",
         title: {
@@ -81,21 +61,29 @@ export const Prefectures: FC = () => {
   });
 
   useEffect(() => {
-    getPrefectureData(
-      fullName,
-      setDateData,
-      setNcurrentpatientsData,
-      setPrefectureData
-    );
+    getPrefectureData(fullName, setPrefectureData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <PageButton />
-      {/* <PieChart /> */}
-      <PrefecturesReferenceMaterial />
-      <LineGraphItem data={lineData} options={lineOptions} title="" />
+      <Main>
+        <PageButton />
+        {/* <PieChart /> */}
+        <PrefecturesReferenceMaterial />
+        <LineGraph>
+          <LineGraphItem data={lineData} options={lineOptions} title="" />
+        </LineGraph>
+      </Main>
     </>
   );
 };
+
+const Main = styled.div`
+  width: 100%;
+`;
+
+const LineGraph = styled.div`
+  width: 70%;
+  margin: 0 auto;
+`;

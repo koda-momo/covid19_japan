@@ -1,11 +1,9 @@
-import { FC, memo, useEffect, useState } from "react";
-import axios from "axios";
+import { FC, memo, useCallback, useEffect, useState } from "react";
 
 //chart.js
 import { ChartOptions, ArcElement, Chart, ChartData } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { useGetPrefectureData } from "../../hooks/useGetPrefectureData";
-// import ChartDataLabels from "chartjs-plugin-datalabels";
 
 type Props = {
   ncurrentpatients: number; //現在患者数
@@ -17,7 +15,6 @@ type Props = {
  */
 export const PieChart: FC<Props> = memo(({ ncurrentpatients, fullName }) => {
   Chart.register(ArcElement);
-  // Chart.register(ChartDataLabels);
 
   //ベッドの%
   const [bedPercent, setBedPercent] = useState(0);
@@ -35,11 +32,27 @@ export const PieChart: FC<Props> = memo(({ ncurrentpatients, fullName }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * 円グラフの汎用表示.
+   */
+  const pieLavel = useCallback((value: number) => {
+    let lavelValue = "";
+    //もしバリューがマイナスの値なら0を付ける
+    if (value < 0) {
+      lavelValue = "(0)";
+    } else {
+      //正の値ならそのままバリューを付ける
+      lavelValue = String(value);
+    }
+
+    return lavelValue;
+  }, []);
+
   //円グラフデータ
   const pieData: ChartData<"pie"> = {
     labels: [
-      `現在患者数${ncurrentpatients}`,
-      `想定病床残数${pieBedData - ncurrentpatients}`,
+      `現在患者数(${ncurrentpatients})`,
+      `想定病床残数(${pieBedData - ncurrentpatients})`,
     ],
     datasets: [
       {
@@ -62,9 +75,6 @@ export const PieChart: FC<Props> = memo(({ ncurrentpatients, fullName }) => {
       },
     },
   };
-
-  console.dir(JSON.stringify(ncurrentpatients));
-  console.dir(JSON.stringify(pieBedData));
 
   return (
     <>

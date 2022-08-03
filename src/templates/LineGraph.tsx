@@ -1,15 +1,13 @@
 import { FC, memo, useCallback, useEffect, useState } from "react";
 import { PageButton } from "../components/layout/PageButton";
 import { LineGraphItem } from "../components/lineGraph/LineGraphItem";
-import { Line } from "react-chartjs-2";
-import { Chart, registerables, ChartOptions, ChartData } from "chart.js";
-import axios from "axios";
-import styled from "styled-components";
+import { ChartOptions, ChartData } from "chart.js";
+import { useGetLineGraphData } from "../hooks/useGetLineGraphData";
 
 /**
  * 折れ線グラフ表示ページ.
  */
-export const LineGraph: FC = () => {
+export const LineGraph: FC = memo(() => {
   //人数ラベル(y軸)
   const [ncurrentpatientsData, setNcurrentpatientsData] = useState<
     Array<number>
@@ -18,28 +16,11 @@ export const LineGraph: FC = () => {
   //日付ラベル(x軸)
   const [dateData, setDateData] = useState<Array<string>>([]);
 
-  /**
-   * 折れ線グラフ用データの取得.
-   */
-  const getData = useCallback(async () => {
-    const response = await axios.get(
-      "https://www.stopcovid19.jp/data/covid19japan-all.json"
-    );
-    const data = response.data;
-    const ncurrentpatientsArray = new Array<number>();
-    const dateArray = new Array<string>();
-
-    for (const item of data) {
-      dateArray.push(item.lastUpdate);
-      ncurrentpatientsArray.push(Number(item.ncurrentpatients));
-    }
-
-    setDateData(dateArray);
-    setNcurrentpatientsData(ncurrentpatientsArray);
-  }, []);
+  //折れ線グラフデータの取得
+  const { getLineGraphData } = useGetLineGraphData();
 
   useEffect(() => {
-    getData();
+    getLineGraphData(setDateData, setNcurrentpatientsData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -87,4 +68,4 @@ export const LineGraph: FC = () => {
       />
     </>
   );
-};
+});

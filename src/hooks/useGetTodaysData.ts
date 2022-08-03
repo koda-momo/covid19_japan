@@ -26,7 +26,7 @@ export const useGetTodaysData = () => {
 
       //csvファイルをJSON形式に変換
       const csv = response2.data.replace(/\n/g, ",");
-      const data2 = csv.replace(/\"/g, "").split(",");
+      const data2 = csv.replace(/"/g, "").split(",");
 
       const item: todaysDataType = {
         ncurrentpatients: Number(data1.ncurrentpatients), //患者数

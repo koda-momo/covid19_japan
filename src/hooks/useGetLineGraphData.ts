@@ -20,7 +20,7 @@ export const useGetLineGraphData = () => {
       );
 
       const csv = response2.data.replace(/\n/g, ",");
-      const data2 = csv.replace(/\"/g, "").split(",");
+      const data2 = csv.replace(/"/g, "").split(",");
 
       //緊急搬送データ作成
       const emergencyArray = new Array<null | number>();

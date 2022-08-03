@@ -41,6 +41,7 @@ export const PrefecturesReferenceMaterial: FC<Props> = memo(
 
     useEffect(() => {
       getPrefectureTextData(fullName, setTextData);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

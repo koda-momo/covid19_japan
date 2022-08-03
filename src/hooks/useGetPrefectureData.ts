@@ -33,7 +33,7 @@ export const useGetPrefectureData = () => {
       const csv = response.data;
 
       //キーの配列を作成
-      const csvArray = csv.replace(/\"/g, "").split(",");
+      const csvArray = csv.replace(/"/g, "").split(",");
       const HEDERS_LENGTH = 7; //項目名は8個
 
       const obj = new Array<PrefectureType>();
@@ -139,7 +139,7 @@ export const useGetPrefectureData = () => {
 
       //csvファイルをJSON形式に変換
       const csv = response.data.replace(/\n/g, ",");
-      const data = csv.replace(/\"/g, "").split(",");
+      const data = csv.replace(/"/g, "").split(",");
 
       const indexNumber = data.indexOf(fullName);
 

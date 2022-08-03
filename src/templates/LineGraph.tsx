@@ -47,6 +47,12 @@ export const LineGraph: FC = memo(() => {
 
   // options
   const options: ChartOptions<"line"> = {
+    plugins: {
+      title: {
+        display: true,
+        text: "COVID-19 日本の新型コロナウイルス概要",
+      },
+    },
     scales: {
       ncurrentpatients: {
         display: true,

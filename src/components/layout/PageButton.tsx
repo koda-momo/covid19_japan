@@ -84,6 +84,7 @@ const OnButton = styled.button`
   height: 40px;
   border: none;
   border-radius: 2%;
+  cursor: pointer;
 `;
 const OffButton = styled.button`
   background-color: gray;
@@ -92,6 +93,7 @@ const OffButton = styled.button`
   height: 40px;
   border: none;
   border-radius: 2%;
+  cursor: pointer;
 `;
 
 const Flex = styled.div`

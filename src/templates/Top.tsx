@@ -20,6 +20,27 @@ export const Top: FC = () => {
           <PrefecturesTable />
         </PrefecturesTableSize>
       </Flex>
+      <Text>
+        <div>
+          新型コロナウイルス感染症（国内事例） 現在患者数 / 対策病床数
+          ※軽症者等は自宅療養など、病床を使用しないことがあります（
+          <LinkUrl href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html">
+            詳細
+          </LinkUrl>
+          ）
+        </div>
+        <Flex>
+          （現在患者数
+          <UpIcon>
+            <img src="/img/trendarrow01.svg" alt="up" />
+          </UpIcon>
+          前日より増加
+          <DownIcon>
+            <img src="/img/trendarrow03.svg" alt="down" />
+          </DownIcon>
+          前日より減少）
+        </Flex>
+      </Text>
     </Main>
   );
 };
@@ -45,4 +66,27 @@ const PrefecturesTableSize = styled.div`
   width: 49%;
   display: flex;
   justify-content: center;
+`;
+
+const Text = styled.div`
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+`;
+
+const LinkUrl = styled.a`
+  color: gray;
+`;
+
+const UpIcon = styled.div`
+  width: 15px;
+  margin-left: -20px;
+  margin-right: -20px;
+`;
+
+const DownIcon = styled.div`
+  width: 15px;
+  margin-left: -20px;
+  margin-right: -20px;
+  transform: scale(1, -1);
 `;

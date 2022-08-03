@@ -62,6 +62,8 @@ export const useGetAllPrefectureData = () => {
           bed: bedCalc,
           patients: todayData[i].ncurrentpatients,
           upDown: upDown,
+          romaji: todayData[i].name, //ローマ字
+          fullName: name, //都道府県名削っていない名前
         });
       }
 

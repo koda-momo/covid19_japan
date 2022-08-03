@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import axios from "axios";
-import { PrefectureType } from "../types/PrefectureType";
+import { PrefectureTextType, PrefectureType } from "../types/PrefectureType";
 import { ChartData } from "chart.js";
+import { format } from "date-fns";
 
 export const useGetPrefectureData = () => {
   //折れ線グラフ現在患者ラベル(y軸)
@@ -96,20 +97,70 @@ export const useGetPrefectureData = () => {
   /**
    * 都道府県円グラフデータの取得.
    */
-  const getPieData = useCallback(async (fullName: string) => {
-    const reponse = await axios.get(
-      "https://www.stopcovid19.jp/data/covid19japan_beds/latest.json"
-    );
+  const getPieData = useCallback(
+    async (
+      fullName: string,
+      setHospitalBeds: Dispatch<SetStateAction<number>>,
+      setHotelsBeds: Dispatch<SetStateAction<number>>
+    ) => {
+      const reponse = await axios.get(
+        "https://www.stopcovid19.jp/data/covid19japan_beds/latest.json"
+      );
 
-    const data = reponse.data.find((item: any) => {
-      return item.都道府県名 === fullName;
-    });
+      const data = reponse.data.find((item: any) => {
+        return item.都道府県名 === fullName;
+      });
 
-    const hospitalBeds = Number(data.入院患者受入確保病床);
-    const hotelsBeds = Number(data.宿泊施設受入可能室数);
+      const hospitalBeds = Number(data.入院患者受入確保病床);
+      const hotelsBeds = Number(data.宿泊施設受入可能室数);
 
-    setPieBedData(hospitalBeds + hotelsBeds);
-  }, []);
+      setPieBedData(hospitalBeds + hotelsBeds);
+      setHospitalBeds(hospitalBeds);
+      setHotelsBeds(hotelsBeds);
+    },
+    []
+  );
 
-  return { getPrefectureData, lineData, getPieData, pieBedData };
+  /**
+   * テキストデータ取得.
+   */
+  const getPrefectureTextData = useCallback(
+    async (
+      fullName: string,
+      setTextData: Dispatch<SetStateAction<PrefectureTextType>>
+    ) => {
+      const response = await axios.get(
+        "https://www.stopcovid19.jp/data/ventilator-20200306.csv"
+      );
+
+      //レスポンスの更新日
+      const daupdateDate = new Date(response.headers["last-modified"]);
+      const date = format(daupdateDate, "yyyy-MM-dd");
+
+      //csvファイルをJSON形式に変換
+      const csv = response.data.replace(/\n/g, ",");
+      const data = csv.replace(/\"/g, "").split(",");
+
+      const indexNumber = data.indexOf(fullName);
+
+      const textData: PrefectureTextType = {
+        ventilator:
+          Number(data[indexNumber + 10]) + Number(data[indexNumber + 12]),
+        doctor: Number(data[indexNumber + 6]),
+        ecmo: Number(data[indexNumber + 12]),
+        bedDataUpdate: date,
+      };
+
+      setTextData(textData);
+    },
+    []
+  );
+
+  return {
+    getPrefectureData,
+    lineData,
+    getPieData,
+    pieBedData,
+    getPrefectureTextData,
+  };
 };

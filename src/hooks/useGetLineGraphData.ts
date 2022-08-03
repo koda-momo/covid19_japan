@@ -22,8 +22,6 @@ export const useGetLineGraphData = () => {
       const csv = response2.data.replace(/\n/g, ",");
       const data2 = csv.replace(/\"/g, "").split(",");
 
-      console.log(data2);
-
       //緊急搬送データ作成
       const emergencyArray = new Array<null | number>();
       //数字の入っている部分が20,23,26...箱目

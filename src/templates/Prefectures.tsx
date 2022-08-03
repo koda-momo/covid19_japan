@@ -1,11 +1,9 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { PageButton } from "../components/layout/PageButton";
-import axios from "axios";
 
 //chart.js
-import { ChartOptions, ArcElement, Chart, ChartData } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import { ChartOptions, ArcElement, Chart } from "chart.js";
 import { LineGraphItem } from "../components/lineGraph/LineGraphItem";
 import { PrefecturesReferenceMaterial } from "../components/prefectures/PrefecturesReferenceMaterial";
 import { PieChart } from "../components/prefectures/PieChart";
@@ -30,6 +28,15 @@ export const Prefectures: FC = () => {
   const location = useLocation();
   const { romaji, fullName } = location.state as State;
 
+  //ベッドの%
+  const [bedPercent, setBedPercent] = useState(0);
+
+  //病院のベッドの数
+  const [hospitalBeds, setHospitalBeds] = useState(0);
+
+  //ホテルのベッドの数
+  const [hotelsBeds, setHotelsBeds] = useState(0);
+
   //都道府県データ
   const [prefectureData, setPrefectureData] = useState<PrefectureType>({
     date: "",
@@ -43,7 +50,8 @@ export const Prefectures: FC = () => {
   });
 
   //都道府県データの取得
-  const { getPrefectureData, lineData } = useGetPrefectureData();
+  const { getPrefectureData, lineData, getPieData, pieBedData } =
+    useGetPrefectureData();
 
   //折れ線グラフoptions
   const [lineOptions] = useState<ChartOptions<"line">>({
@@ -69,6 +77,15 @@ export const Prefectures: FC = () => {
 
   useEffect(() => {
     getPrefectureData(romaji, setPrefectureData);
+    getPieData(fullName, setHospitalBeds, setHotelsBeds);
+
+    //percentの計算
+    const calcPercent = Math.round(
+      (prefectureData.ncurrentpatients / pieBedData) * 100
+    );
+    //入院患者のpercentが100以上なら0を代入
+    const calcBedPercent = 100 - calcPercent <= 0 ? 0 : 100 - calcPercent;
+    setBedPercent(calcBedPercent);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -79,11 +96,25 @@ export const Prefectures: FC = () => {
         <PieGraph>
           <PieChart
             ncurrentpatients={prefectureData.ncurrentpatients}
+            pieBedData={pieBedData}
+            bedPercent={bedPercent}
             fullName={fullName}
           />
         </PieGraph>
 
-        <PrefecturesReferenceMaterial />
+        <Text>
+          <PrefecturesReferenceMaterial
+            npatients={prefectureData.npatients}
+            nexits={prefectureData.nexits}
+            ndeaths={prefectureData.ndeaths}
+            bed={pieBedData}
+            fullName={fullName}
+            date={prefectureData.date}
+            hotelsBeds={hotelsBeds}
+            hospitalBeds={hospitalBeds}
+            ncurrentpatients={prefectureData.ncurrentpatients}
+          />
+        </Text>
 
         <LineGraph>
           <LineGraphItem data={lineData} options={lineOptions} title="" />
@@ -102,6 +133,10 @@ const PieGraph = styled.div`
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 50px;
+`;
+
+const Text = styled.div`
+  text-align: center;
 `;
 
 const LineGraph = styled.div`

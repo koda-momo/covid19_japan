@@ -20,3 +20,10 @@ export type PrefectureType = {
   nunknowns: number;
   ninspections: number;
 };
+
+export type PrefectureTextType = {
+  ventilator: number;
+  doctor: number;
+  ecmo: number;
+  bedDataUpdate: string;
+};

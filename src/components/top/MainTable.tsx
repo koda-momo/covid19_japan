@@ -14,6 +14,7 @@ export const MainTable: FC = memo(() => {
     nexits: 0,
     ndeaths: 0,
     npatients: 0,
+    lastUpdate: "0000-00-00",
   });
 
   //初期データの取得
@@ -52,7 +53,6 @@ export const MainTable: FC = memo(() => {
           />
         </LeftCell>
       </Flex>
-
       <Flex>
         <RightCell>
           <MainTableCell
@@ -69,7 +69,6 @@ export const MainTable: FC = memo(() => {
           />
         </LeftCell>
       </Flex>
-
       <Flex>
         <RightCell>
           <MainTableCell title="対策病床数112,445床" />
@@ -87,6 +86,13 @@ export const MainTable: FC = memo(() => {
           日本臨床工学技士会
         </div>
       </Postscript>
+      <Text>
+        <div>現在患者数 更新日: {todaysData.lastUpdate}</div>
+        <div>対策病床数 発表日:2022-07-27</div>
+        <div>
+          新型コロナ対策病床数は「感染症指定医療機関の指定状況」の下記合計と仮定
+        </div>
+      </Text>
     </Summary>
   );
 });
@@ -114,4 +120,8 @@ const Postscript = styled.div`
   text-align: center;
   font-size: 10px;
   margin-top: -3.5px;
+`;
+
+const Text = styled.div`
+  text-align: center;
 `;

@@ -3,4 +3,5 @@ export type todaysDataType = {
   nexits: number;
   ndeaths: number;
   npatients: number;
+  lastUpdate: string;
 };

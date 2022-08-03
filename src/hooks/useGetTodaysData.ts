@@ -18,6 +18,7 @@ export const useGetTodaysData = () => {
         nexits: Number(data.nexits), //累積退院者数
         ndeaths: Number(data.ndeaths), //死亡者
         npatients: Number(data.npatients), //PCR陽性
+        lastUpdate: data.lastUpdate, //更新日
       };
 
       setTodaysData(item);

@@ -33,7 +33,7 @@ export const PrefecturesCell: FC<Props> = memo(
                 </DownIcon>
               )}
             </Flex>
-            <div>{Math.round((patients / bed) * 100)}%</div>
+            <div>{Math.floor((patients / bed) * 100)}%</div>
             <div>
               <BoldFont>{patients.toLocaleString()}</BoldFont>
               <SmallFont>/{bed}</SmallFont>

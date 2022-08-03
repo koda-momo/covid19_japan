@@ -15,6 +15,11 @@ export const MainTable: FC = memo(() => {
     ndeaths: 0,
     npatients: 0,
     lastUpdate: "0000-00-00",
+    beds: 0, //ベッド
+    ventilator: 0, //人工呼吸器
+    doctor: 0, //臨床工学技士
+    ecmo: 0, //ECMO
+    bedDataUpdate: "0000-00-00",
   });
 
   //初期データの取得
@@ -30,7 +35,7 @@ export const MainTable: FC = memo(() => {
    */
 
   const calcPercent = useCallback((ncurrentpatients: number, bed: number) => {
-    const calcAnswer = Math.round((ncurrentpatients / bed) * 100);
+    const calcAnswer = Math.floor((ncurrentpatients / bed) * 100);
 
     return calcAnswer;
   }, []);
@@ -41,7 +46,7 @@ export const MainTable: FC = memo(() => {
         <RightCell>
           <MainTableCell
             title="現在患者数/対策病床数"
-            summary={calcPercent(todaysData.ncurrentpatients, 112445)}
+            summary={calcPercent(todaysData.ncurrentpatients, todaysData.beds)}
             unit="%"
           />
         </RightCell>
@@ -71,7 +76,7 @@ export const MainTable: FC = memo(() => {
       </Flex>
       <Flex>
         <RightCell>
-          <MainTableCell title="対策病床数112,445床" />
+          <MainTableCell title={`対策病床数${todaysData.beds}床`} />
         </RightCell>
         <LeftCell>
           <MainTableCell
@@ -80,7 +85,11 @@ export const MainTable: FC = memo(() => {
         </LeftCell>
       </Flex>
       <Postscript>
-        <div>臨床工学技士 14,378人 / 人工呼吸器 28,197台 / ECMO 1,412台</div>
+        <div>
+          臨床工学技士 {todaysData.doctor}人 / 人工呼吸器
+          {todaysData.ventilator}台 / ECMO
+          {todaysData.ecmo}台
+        </div>
         <div>
           2020年2月回答 出典 一般社団法人 日本呼吸療法医学会　公益社団法人
           日本臨床工学技士会
@@ -88,7 +97,7 @@ export const MainTable: FC = memo(() => {
       </Postscript>
       <Text>
         <div>現在患者数 更新日: {todaysData.lastUpdate}</div>
-        <div>対策病床数 発表日:2022-07-27</div>
+        <div>対策病床数 発表日:{todaysData.bedDataUpdate}</div>
         <div>
           新型コロナ対策病床数は「感染症指定医療機関の指定状況」の下記合計と仮定
         </div>
@@ -124,4 +133,5 @@ const Postscript = styled.div`
 
 const Text = styled.div`
   text-align: center;
+  font-size: 13px;
 `;

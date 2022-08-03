@@ -18,7 +18,11 @@ export const PrefecturesCell: FC<Props> = memo(
   ({ name, bed, patients, upDown, romaji, fullName }) => {
     return (
       <>
-        <Link to="/prefectures" state={{ romaji: romaji, fullName: fullName }}>
+        <Link
+          to="/prefectures"
+          state={{ romaji: romaji, fullName: fullName }}
+          style={{ textDecoration: "none" }}
+        >
           <Cell>
             <Flex>
               <PrefectureName>{name}</PrefectureName>
@@ -29,7 +33,7 @@ export const PrefecturesCell: FC<Props> = memo(
                 </UpIcon>
               ) : (
                 <DownIcon>
-                  <img src="/img/trendarrow03.svg" alt="down" />{" "}
+                  <img src="/img/trendarrow03.svg" alt="down" />
                 </DownIcon>
               )}
             </Flex>

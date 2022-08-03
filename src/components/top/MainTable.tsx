@@ -91,15 +91,21 @@ export const MainTable: FC = memo(() => {
           {todaysData.ecmo}台
         </div>
         <div>
-          2020年2月回答 出典 一般社団法人 日本呼吸療法医学会　公益社団法人
-          日本臨床工学技士会
+          2020年2月回答 出典{" "}
+          <LinkUrl href="https://ja-ces.or.jp/info-ce/%e4%ba%ba%e5%b7%a5%e5%91%bc%e5%90%b8%e5%99%a8%e3%81%8a%e3%82%88%e3%81%b3ecmo%e8%a3%85%e7%bd%ae%e3%81%ae%e5%8f%96%e6%89%b1%e5%8f%b0%e6%95%b0%e7%ad%89%e3%81%ab%e9%96%a2%e3%81%99%e3%82%8b%e7%b7%8a/">
+            一般社団法人 日本呼吸療法医学会　公益社団法人 日本臨床工学技士会
+          </LinkUrl>
         </div>
       </Postscript>
       <Text>
         <div>現在患者数 更新日: {todaysData.lastUpdate}</div>
         <div>対策病床数 発表日:{todaysData.bedDataUpdate}</div>
         <div>
-          新型コロナ対策病床数は「感染症指定医療機関の指定状況」の下記合計と仮定
+          新型コロナ対策病床数は「
+          <LinkUrl href="https://www.mhlw.go.jp/bunya/kenkou/kekkaku-kansenshou15/02-02.html">
+            感染症指定医療機関の指定状況
+          </LinkUrl>
+          」の下記合計と仮定
         </div>
       </Text>
     </Summary>
@@ -134,4 +140,8 @@ const Postscript = styled.div`
 const Text = styled.div`
   text-align: center;
   font-size: 13px;
+`;
+
+const LinkUrl = styled.a`
+  color: gray;
 `;
